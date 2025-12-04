@@ -3,6 +3,7 @@ import { setApiInfo } from './apiSlice';
 
 // Example saga for additional side effects
 function* handleApiInfoFetched() {
+  yield; // Required for generator function
   console.log('API info fetch triggered via saga');
 }
 

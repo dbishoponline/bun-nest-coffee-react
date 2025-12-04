@@ -4,25 +4,27 @@ import * as client from 'prom-client';
 @Injectable()
 export class MetricsService implements OnModuleInit {
   private registry: client.Registry;
+  private httpRequestCounter: client.Counter<string>;
+  private httpRequestDuration: client.Histogram<string>;
 
   onModuleInit() {
     this.registry = new client.Registry();
-    
+
     // Add default metrics
     client.collectDefaultMetrics({
       register: this.registry,
       prefix: 'nestjs_',
     });
 
-    // Custom metrics can be added here
-    const httpRequestCounter = new client.Counter({
+    // Custom metrics
+    this.httpRequestCounter = new client.Counter({
       name: 'nestjs_http_requests_total',
       help: 'Total number of HTTP requests',
       labelNames: ['method', 'path', 'status'],
       registers: [this.registry],
     });
 
-    const httpRequestDuration = new client.Histogram({
+    this.httpRequestDuration = new client.Histogram({
       name: 'nestjs_http_request_duration_seconds',
       help: 'Duration of HTTP requests in seconds',
       labelNames: ['method', 'path', 'status'],
@@ -37,5 +39,18 @@ export class MetricsService implements OnModuleInit {
 
   getRegistry(): client.Registry {
     return this.registry;
+  }
+
+  incrementRequestCounter(method: string, path: string, status: string) {
+    this.httpRequestCounter.inc({ method, path, status });
+  }
+
+  observeRequestDuration(
+    method: string,
+    path: string,
+    status: string,
+    duration: number,
+  ) {
+    this.httpRequestDuration.observe({ method, path, status }, duration);
   }
 }

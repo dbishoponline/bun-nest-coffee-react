@@ -40,6 +40,9 @@ coverage/
 # Bun
 bun.lockb
 
+# NPM
+package-lock.json
+
 # Docker volumes (local)
 docker/data/
 
