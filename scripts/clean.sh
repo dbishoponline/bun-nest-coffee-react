@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Clean up script - removes containers, volumes, and images
-set -e
+set -euo pipefail
 
 echo "🧹 Cleaning up Docker resources..."
 

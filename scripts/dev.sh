@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Development startup script
-set -e
+set -euo pipefail
 
 echo "🚀 Starting development environment..."
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Stop all containers script
-set -e
+set -euo pipefail
 
 echo "🛑 Stopping all containers..."
 docker compose down

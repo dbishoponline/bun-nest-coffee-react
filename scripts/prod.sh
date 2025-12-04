@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Production startup script
-set -e
+set -euo pipefail
 
 echo "🚀 Starting production environment..."
 
